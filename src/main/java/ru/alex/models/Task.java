@@ -44,4 +44,12 @@ public class Task {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "Task: id = " + id + ",\n" +
+                " title = " + title + ",\n" +
+                " description = " + description + ",\n" +
+                " userId = " + userId + "\n\n";
+    }
 }

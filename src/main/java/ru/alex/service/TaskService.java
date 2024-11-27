@@ -6,16 +6,24 @@ import ru.alex.aspect.CheckIdExecution;
 import ru.alex.aspect.ErrorExecution;
 import ru.alex.aspect.GetterExecution;
 import ru.alex.aspect.LogExecution;
+import ru.alex.kafka.KafkaTaskProducer;
 import ru.alex.models.Task;
 import ru.alex.repository.TaskRepository;
+import ru.alex.util.TaskMapper;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class TaskService {
+    private final TaskRepository taskRepository;
+    private final KafkaTaskProducer kafkaTaskProducer;
+
     @Autowired
-    private TaskRepository taskRepository;
+    public TaskService(TaskRepository taskRepository, KafkaTaskProducer kafkaTaskProducer) {
+        this.taskRepository = taskRepository;
+        this.kafkaTaskProducer = kafkaTaskProducer;
+    }
 
     @LogExecution
     @ErrorExecution
@@ -39,10 +47,18 @@ public class TaskService {
         return taskRepository.findAll();
     }
 
+    // TODO: Fix aspects and add id checking (if user with given id even exists)
     @LogExecution
     @CheckIdExecution
     public Task updateTask(Long id, Task task) {
+        Task oldTask = taskRepository.findById(id).get();
+
         task.setId(id);
+
+        if (oldTask.isStatusChanged(task)) {
+            kafkaTaskProducer.sendTaskStatusUpdate(TaskMapper.toDto(task));
+        }
+
         return taskRepository.save(task);
     }
 

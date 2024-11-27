@@ -16,7 +16,11 @@
    ```bash
    mvn clean install
 
-4. Запустить проект
+4. Перед запуском также нужно поднять кафку
+   ```bash
+   docker-compose -d up
+
+5. Запустить проект
 - Либо из IDE
 - Либо через команду:
 
@@ -41,7 +45,8 @@
     -d '{
     "title": "My Task",
     "description": "Task description",
-    "userId": 1
+    "userId": 1,
+    "status": "PENDING"
     }'
 
 4. Обновление задачи
@@ -51,8 +56,11 @@
       -d '{
           "title": "Updated Task",
           "description": "Updated description",
-          "userId": 1
+          "userId": 1,
+          "status": "IN_PROGRESS"
       }'
+   
+   В поле "status" используются значения из enum TaskStatus
 
 5. Удаление задачи
    Для удаления задачи по её идентификатору, выполните следующий запрос:

@@ -4,11 +4,25 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.alex.dto.TaskDto;
 
-@Getter
-@Setter
 public class TaskStatusMessage {
     private Long taskId;
     private TaskStatus taskStatus;
+
+    public Long getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
+    }
+
+    public TaskStatus getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
+    }
 
     public TaskStatusMessage() {}
 

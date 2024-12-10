@@ -10,9 +10,12 @@ import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class KafkaTaskProducer {
     private final KafkaTemplate<String, TaskDto> template;
+
+    public KafkaTaskProducer(KafkaTemplate<String, TaskDto> template) {
+        this.template = template;
+    }
 
     public void sendTaskStatusUpdate(TaskDto taskDto) {
         try {

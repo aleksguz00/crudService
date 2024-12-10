@@ -49,8 +49,10 @@ public class TaskService {
 
     // TODO: Fix aspects and add id checking (if user with given id even exists)
     @LogExecution
-    @CheckIdExecution
+    // @CheckIdExecution
     public Task updateTask(Long id, Task task) {
+        if (task.getUserId() < 0) throw new IllegalArgumentException("User id must be greater than 0");
+
         Task oldTask = taskRepository.findById(id).get();
 
         task.setId(id);
@@ -65,5 +67,9 @@ public class TaskService {
     @LogExecution
     public void deleteTask(Long id) {
         taskRepository.deleteById(id);
+    }
+
+    public void deleteAll() {
+        taskRepository.deleteAll();
     }
 }

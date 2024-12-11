@@ -92,8 +92,8 @@ public class KafkaConfig {
         DefaultErrorHandler handler = new DefaultErrorHandler(new FixedBackOff(1000, 3));
         handler.addNotRetryableExceptions(IllegalStateException.class);
         handler.setRetryListeners(((record, ex, deliveryAttempt) -> {
-            log.error("Something went wrong. Retry Listeners message = {}, offset = {}, deliveryAttempt = {}",
-                    ex.getMessage(), record.offset(), deliveryAttempt);
+//            log.error("Something went wrong. Retry Listeners message = {}, offset = {}, deliveryAttempt = {}",
+//                    ex.getMessage(), record.offset(), deliveryAttempt);
         }));
 
         return handler;

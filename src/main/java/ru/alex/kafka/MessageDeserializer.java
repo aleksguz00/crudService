@@ -11,7 +11,6 @@ import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class MessageDeserializer<T> extends JsonDeserializer<T> {
     private static String getMessage(byte[] data) {
         return new String(data, StandardCharsets.UTF_8);
@@ -22,7 +21,7 @@ public class MessageDeserializer<T> extends JsonDeserializer<T> {
         try {
             return super.deserialize(topic, headers, data);
         } catch (Exception e) {
-            log.warn("Error occurred while deserializing message");
+            // log.warn("Error occurred while deserializing message");
             return null;
         }
     }
@@ -32,7 +31,7 @@ public class MessageDeserializer<T> extends JsonDeserializer<T> {
         try {
             return super.deserialize(topic, data);
         } catch (Exception e) {
-            log.warn("Error occurred while deserializing message");
+            // log.warn("Error occurred while deserializing message");
             return null;
         }
     }
